@@ -1,0 +1,63 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "alerts.yml"
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'aetheria-healthcare'
+    static_configs:
+      - targets: ['aetheria-healthcare:8000']
+    metrics_path: /metrics
+
+  - job_name: 'aetheria-legal'
+    static_configs:
+      - targets: ['aetheria-legal:8000']
+    metrics_path: /metrics
+
+  - job_name: 'aetheria-education'
+    static_configs:
+      - targets: ['aetheria-education:8000']
+    metrics_path: /metrics
+
+  - job_name: 'aetheria-finance'
+    static_configs:
+      - targets: ['aetheria-finance:8000']
+    metrics_path: /metrics
+
+  - job_name: 'aetheria-agriculture'
+    static_configs:
+      - targets: ['aetheria-agriculture:8000']
+    metrics_path: /metrics
+
+  - job_name: 'aetheria-manufacturing'
+    static_configs:
+      - targets: ['aetheria-manufacturing:8000']
+    metrics_path: /metrics
+
+  - job_name: 'aetheria-customer-service'
+    static_configs:
+      - targets: ['aetheria-customer-service:8000']
+    metrics_path: /metrics
+
+  - job_name: 'aetheria-research'
+    static_configs:
+      - targets: ['aetheria-research:8000']
+    metrics_path: /metrics
+
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres:5432']

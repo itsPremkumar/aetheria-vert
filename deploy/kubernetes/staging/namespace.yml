@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: aetheria-staging
+  labels:
+    app: aetheria
+    environment: staging
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: aetheria-prod
+  labels:
+    app: aetheria
+    environment: production
