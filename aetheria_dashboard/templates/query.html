@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Query Interface</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">🧠 Aetheria</div>
+        <div class="nav-links">
+            <a href="/graph/">Graph</a>
+            <a href="/query/">Query</a>
+            <a href="/verticals/">Verticals</a>
+            <a href="/api-client/">API</a>
+            <a href="/docs/">Docs</a>
+        </div>
+    </nav>
+    <main class="container">
+        <h1>Query Interface</h1>
+        <div class="query-container">
+            <form id="query-form">
+                <input type="text" id="query-input" placeholder="Search the knowledge graph..." />
+                <select id="domain-select">
+                    <option value="all">All Domains</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="legal">Legal</option>
+                    <option value="finance">Finance</option>
+                    <option value="education">Education</option>
+                    <option value="customer_service">Customer Service</option>
+                    <option value="manufacturing">Manufacturing</option>
+                    <option value="agriculture">Agriculture</option>
+                    <option value="research">Research</option>
+                </select>
+                <button type="submit">Search</button>
+            </form>
+            <div id="query-results"></div>
+        </div>
+    </main>
+    <script src="/static/js/query.js"></script>
+</body>
+</html>

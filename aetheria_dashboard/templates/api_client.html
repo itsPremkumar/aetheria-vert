@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API Client</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">🧠 Aetheria</div>
+        <div class="nav-links">
+            <a href="/graph/">Graph</a>
+            <a href="/query/">Query</a>
+            <a href="/verticals/">Verticals</a>
+            <a href="/api-client/">API</a>
+            <a href="/docs/">Docs</a>
+        </div>
+    </nav>
+    <main class="container">
+        <h1>REST API Client</h1>
+        <div class="api-client">
+            <div class="api-endpoints" id="api-endpoints"></div>
+            <div class="api-tester">
+                <h3>API Tester</h3>
+                <input type="text" id="api-url" placeholder="/graph/data" />
+                <button id="send-request">Send</button>
+                <pre id="api-response"></pre>
+            </div>
+        </div>
+    </main>
+    <script src="/static/js/api_client.js"></script>
+</body>
+</html>

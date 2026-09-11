@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Knowledge Graph Explorer</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">🧠 Aetheria</div>
+        <div class="nav-links">
+            <a href="/graph/">Graph</a>
+            <a href="/query/">Query</a>
+            <a href="/verticals/">Verticals</a>
+            <a href="/api-client/">API</a>
+            <a href="/docs/">Docs</a>
+        </div>
+    </nav>
+    <main class="container">
+        <h1>Knowledge Graph Explorer</h1>
+        <div class="graph-container">
+            <div id="graph-viz"></div>
+            <div class="graph-sidebar">
+                <h3>Graph Stats</h3>
+                <div id="graph-stats"></div>
+                <h3>Legend</h3>
+                <div class="legend">
+                    <span class="legend-item disease">Disease</span>
+                    <span class="legend-item drug">Drug</span>
+                    <span class="legend-item symptom">Symptom</span>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="/static/js/graph.js"></script>
+</body>
+</html>
