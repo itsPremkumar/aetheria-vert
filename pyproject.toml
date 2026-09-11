@@ -1,0 +1,14 @@
+[project]
+name = "aetheria-vert"
+version = "0.1.0"
+description = "Aetheria Vertical AI Platform — Production-quality, open-source Vertical AI Knowledge Graph"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
