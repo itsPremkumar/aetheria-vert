@@ -1,0 +1,556 @@
+# Kubernetes Manifests for all 8 Aetheria Vertical KGs — Staging
+# Apply with: kubectl apply -f deploy/kubernetes/staging/
+
+# Legal KG
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aetheria-legal
+  namespace: aetheria-staging
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aetheria-legal
+  template:
+    metadata:
+      labels:
+        app: aetheria-legal
+    spec:
+      containers:
+        - name: legal
+          image: ghcr.io/itspremkumar/aetheria-legal:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: VERTICAL
+              value: "legal"
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: aetheria-secrets
+                  key: redis-url
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: aetheria-secrets
+                  key: database-url
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              cpu: "1"
+              memory: "2Gi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aetheria-legal
+  namespace: aetheria-staging
+spec:
+  selector:
+    app: aetheria-legal
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: ClusterIP
+---
+# Education KG
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aetheria-education
+  namespace: aetheria-staging
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aetheria-education
+  template:
+    metadata:
+      labels:
+        app: aetheria-education
+    spec:
+      containers:
+        - name: education
+          image: ghcr.io/itspremkumar/aetheria-education:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: VERTICAL
+              value: "education"
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: aetheria-secrets
+                  key: redis-url
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: aetheria-secrets
+                  key: database-url
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              cpu: "1"
+              memory: "2Gi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aetheria-education
+  namespace: aetheria-staging
+spec:
+  selector:
+    app: aetheria-education
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: ClusterIP
+---
+# Finance KG
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aetheria-finance
+  namespace: aetheria-staging
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aetheria-finance
+  template:
+    metadata:
+      labels:
+        app: aetheria-finance
+    spec:
+      containers:
+        - name: finance
+          image: ghcr.io/itspremkumar/aetheria-finance:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: VERTICAL
+              value: "finance"
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: aetheria-secrets
+                  key: redis-url
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: aetheria-secrets
+                  key: database-url
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              cpu: "1"
+              memory: "2Gi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aetheria-finance
+  namespace: aetheria-staging
+spec:
+  selector:
+    app: aetheria-finance
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: ClusterIP
+---
+# Agriculture KG
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aetheria-agriculture
+  namespace: aetheria-staging
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aetheria-agriculture
+  template:
+    metadata:
+      labels:
+        app: aetheria-agriculture
+    spec:
+      containers:
+        - name: agriculture
+          image: ghcr.io/itspremkumar/aetheria-agriculture:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: VERTICAL
+              value: "agriculture"
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: aetheria-secrets
+                  key: redis-url
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: aetheria-secrets
+                  key: database-url
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              cpu: "1"
+              memory: "2Gi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aetheria-agriculture
+  namespace: aetheria-staging
+spec:
+  selector:
+    app: aetheria-agriculture
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: ClusterIP
+---
+# Manufacturing KG
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aetheria-manufacturing
+  namespace: aetheria-staging
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aetheria-manufacturing
+  template:
+    metadata:
+      labels:
+        app: aetheria-manufacturing
+    spec:
+      containers:
+        - name: manufacturing
+          image: ghcr.io/itspremkumar/aetheria-manufacturing:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: VERTICAL
+              value: "manufacturing"
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: aetheria-secrets
+                  key: redis-url
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: aetheria-secrets
+                  key: database-url
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              cpu: "1"
+              memory: "2Gi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aetheria-manufacturing
+  namespace: aetheria-staging
+spec:
+  selector:
+    app: aetheria-manufacturing
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: ClusterIP
+---
+# Customer Service KG
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aetheria-customer-service
+  namespace: aetheria-staging
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aetheria-customer-service
+  template:
+    metadata:
+      labels:
+        app: aetheria-customer-service
+    spec:
+      containers:
+        - name: customer-service
+          image: ghcr.io/itspremkumar/aetheria-customer-service:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: VERTICAL
+              value: "customer-service"
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: aetheria-secrets
+                  key: redis-url
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: aetheria-secrets
+                  key: database-url
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              cpu: "1"
+              memory: "2Gi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aetheria-customer-service
+  namespace: aetheria-staging
+spec:
+  selector:
+    app: aetheria-customer-service
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: ClusterIP
+---
+# Research KG
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aetheria-research
+  namespace: aetheria-staging
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aetheria-research
+  template:
+    metadata:
+      labels:
+        app: aetheria-research
+    spec:
+      containers:
+        - name: research
+          image: ghcr.io/itspremkumar/aetheria-research:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: VERTICAL
+              value: "research"
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: aetheria-secrets
+                  key: redis-url
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: aetheria-secrets
+                  key: database-url
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              cpu: "1"
+              memory: "2Gi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aetheria-research
+  namespace: aetheria-staging
+spec:
+  selector:
+    app: aetheria-research
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: ClusterIP
+---
+# Orchestrator
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aetheria-orchestrator
+  namespace: aetheria-staging
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aetheria-orchestrator
+  template:
+    metadata:
+      labels:
+        app: aetheria-orchestrator
+    spec:
+      containers:
+        - name: orchestrator
+          image: ghcr.io/itspremkuma/aetheria-orchestrator:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: HEALTHCARE_URL
+              value: "http://aetheria-healthcare:80"
+            - name: LEGAL_URL
+              value: "http://aetheria-legal:80"
+            - name: EDUCATION_URL
+              value: "http://aetheria-education:80"
+            - name: FINANCE_URL
+              value: "http://aetheria-finance:80"
+            - name: AGRICULTURE_URL
+              value: "http://aetheria-agriculture:80"
+            - name: MANUFACTURING_URL
+              value: "http://aetheria-manufacturing:80"
+            - name: CUSTOMER_SERVICE_URL
+              value: "http://aetheria-customer-service:80"
+            - name: RESEARCH_URL
+              value: "http://aetheria-research:80"
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              cpu: "1"
+              memory: "2Gi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aetheria-orchestrator
+  namespace: aetheria-staging
+spec:
+  selector:
+    app: aetheria-orchestrator
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: ClusterIP
+---
+# Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aetheria-ingress
+  namespace: aetheria-staging
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+spec:
+  rules:
+    - host: staging.aetheria.local
+      http:
+        paths:
+          - path: /healthcare
+            pathType: Prefix
+            backend:
+              service:
+                name: aetheria-healthcare
+                port:
+                  number: 80
+          - path: /legal
+            pathType: Prefix
+            backend:
+              service:
+                name: aetheria-legal
+                port:
+                  number: 80
+          - path: /education
+            pathType: Prefix
+            backend:
+              service:
+                name: aetheria-education
+                port:
+                  number: 80
+          - path: /finance
+            pathType: Prefix
+            backend:
+              service:
+                name: aetheria-finance
+                port:
+                  number: 80
+          - path: /agriculture
+            pathType: Prefix
+            backend:
+              service:
+                name: aetheria-agriculture
+                port:
+                  number: 80
+          - path: /manufacturing
+            pathType: Prefix
+            backend:
+              service:
+                name: aetheria-manufacturing
+                port:
+                  number: 80
+          - path: /customer-service
+            pathType: Prefix
+            backend:
+              service:
+                name: aetheria-customer-service
+                port:
+                  number: 80
+          - path: /research
+            pathType: Prefix
+            backend:
+              service:
+                name: aetheria-research
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: aetheria-orchestrator
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - staging.aetheria.local
+      secretName: aetheria-tls-staging

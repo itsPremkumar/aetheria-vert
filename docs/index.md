@@ -50,6 +50,26 @@ python -m pytest tests/ -q
 docker compose up -d
 ```
 
+## API
+
+```python
+from aetheria.core import MultiAgentOrchestrator
+from aetheria.verticals.healthcare import HealthcarePlugin
+
+# Create orchestrator
+orch = MultiAgentOrchestrator()
+
+# Register plugins
+orch.register_plugin(HealthcarePlugin())
+
+# Process text
+result = orch.process("Patient has diabetes and takes metformin")
+
+# Query
+result = orch.query("diabetes treatment")
+print(result.answer)
+```
+
 ## License
 
 MIT
