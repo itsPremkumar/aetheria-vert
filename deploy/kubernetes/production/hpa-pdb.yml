@@ -1,0 +1,258 @@
+# Production Kubernetes Manifests — Higher replicas, HPA, PDB
+# Apply with: kubectl apply -f deploy/kubernetes/production/
+
+# Horizontal Pod Autoscaler for all verticals
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: aetheria-healthcare-hpa
+  namespace: aetheria-prod
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: aetheria-healthcare
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: aetheria-legal-hpa
+  namespace: aetheria-prod
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: aetheria-legal
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: aetheria-education-hpa
+  namespace: aetheria-prod
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: aetheria-education
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: aetheria-finance-hpa
+  namespace: aetheria-prod
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: aetheria-finance
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: aetheria-agriculture-hpa
+  namespace: aetheria-prod
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: aetheria-agriculture
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: aetheria-manufacturing-hpa
+  namespace: aetheria-prod
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: aetheria-manufacturing
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: aetheria-customer-service-hpa
+  namespace: aetheria-prod
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: aetheria-customer-service
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: aetheria-research-hpa
+  namespace: aetheria-prod
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: aetheria-research
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+---
+# Pod Disruption Budgets for high availability
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: aetheria-healthcare-pdb
+  namespace: aetheria-prod
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: aetheria-healthcare
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: aetheria-legal-pdb
+  namespace: aetheria-prod
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: aetheria-legal
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: aetheria-education-pdb
+  namespace: aetheria-prod
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: aetheria-education
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: aetheria-finance-pdb
+  namespace: aetheria-prod
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: aetheria-finance
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: aetheria-agriculture-pdb
+  namespace: aetheria-prod
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: aetheria-agriculture
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: aetheria-manufacturing-pdb
+  namespace: aetheria-prod
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: aetheria-manufacturing
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: aetheria-customer-service-pdb
+  namespace: aetheria-prod
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: aetheria-customer-service
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: aetheria-research-pdb
+  namespace: aetheria-prod
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: aetheria-research

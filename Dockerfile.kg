@@ -1,0 +1,39 @@
+# Multi-stage Dockerfile for Aetheria Knowledge Graph services
+# Usage: docker build --build-arg VERTICAL=healthcare -t aetheria-healthcare .
+
+FROM python:3.11-slim as builder
+
+ARG VERTICAL=core
+ENV VERTICAL=${VERTICAL}
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    && rm -rf /rf/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
+
+# Production stage
+FROM python:3.11-slim
+
+ARG VERTICAL=core
+ENV VERTICAL=${VERTICAL}
+
+RUN groupadd -r hermes && useradd -r -g hermes -d /app -s /sbin/nologin hermes
+
+WORKDIR /app
+
+COPY --from=builder /install /usr/local
+COPY src/${VERTICAL}/ ./src/
+COPY src/common/ ./src/common/
+
+USER hermes
+
+EXPOSE 8000
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+CMD ["python", "-m", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]

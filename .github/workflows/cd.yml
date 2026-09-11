@@ -1,0 +1,61 @@
+name: CD Pipeline — Deploy to Kubernetes
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/k8s-set-context@v3
+        with:
+          kubeconfig: ${{ secrets.KUBE_CONFIG_STAGING }}
+      - name: Deploy to staging
+        run: |
+          kubectl apply -f deploy/kubernetes/staging/
+          kubectl rollout status deployment/aetheria-healthcare -n aetheria-staging
+          kubectl rollout status deployment/aetheria-legal -n aetheria-staging
+          kubectl rollout status deployment/aetheria-education -n aetheria-staging
+          kubectl rollout status deployment/aetheria-finance -n aetheria-staging
+          kubectl rollout status deployment/aetheria-agriculture -n aetheria-staging
+          kubectl rollout status deployment/aetheria-manufacturing -n aetheria-staging
+          kubectl rollout status deployment/aetheria-customer-service -n aetheria-staging
+          kubectl rollout status deployment/aetheria-research -n aetheria-staging
+      - name: Run smoke tests
+        run: |
+          ./scripts/smoke-tests.sh staging
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    needs: deploy-staging
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/k8s-set-context@v3
+        with:
+          kubeconfig: ${{ secrets.KUBE_CONFIG_PRODUCTION }}
+      - name: Deploy to production
+        run: |
+          kubectl apply -f deploy/kubernetes/production/
+          kubectl rollout status deployment/aetheria-healthcare -n aetheria-prod
+          kubectl rollout status deployment/aetheria-legal -n aetheria-prod
+          kubectl rollout status deployment/aetheria-education -n aetheria-prod
+          kubectl rollout status deployment/aetheria-finance -n aetheria-prod
+          kubectl rollout status deployment/aetheria-agriculture -n aetheria-prod
+          kubectl rollout status deployment/aetheria-manufacturing -n aetheria-prod
+          kubectl rollout status deployment/aetheria-customer-service -n aetheria-prod
+          kubectl rollout status deployment/aetheria-research -n aetheria-prod
+      - name: Run smoke tests
+        run: |
+          ./scripts/smoke-tests.sh production
+      - name: Notify success
+        uses: slackapi/slack-github-action@v1
+        with:
+          payload: |
+            {"text": "Aetheria Vertical AI deployed to production ✅"}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
